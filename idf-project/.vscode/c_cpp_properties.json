@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/main/**",
+                "${workspaceFolder}/build/**",
+                "${workspaceFolder}/components/esp32-camera/**",
+                "${workspaceFolder}/components/console/**",
+                "${workspaceFolder}/components/cmd_nvs/**",
+                "${workspaceFolder}/components/cmd_system/**",
+                "${workspaceFolder}/components/nvs_flash/include/**",
+                "${workspaceFolder}/components/spi_flash/include/**",
+                "${workspaceFolder}/components/esp32-button/**",               
+                "${MY_IDF_PATH}/components/**",
+                "${MY_IDF_PATH}/examples/common_components/protocol_examples_common/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,3 @@
+[submodule "idf-project/components/arduino"]
+	path = idf-project/components/arduino
+	url = https://github.com/espressif/arduino-esp32.git
