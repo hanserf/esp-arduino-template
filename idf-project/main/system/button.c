@@ -131,7 +131,7 @@ QueueHandle_t pulled_button_init(unsigned long long pin_select, gpio_pull_mode_t
             ESP_LOGI(TAG, "Registering button input: %d", pin);
             debounce[idx].pin = pin;
             debounce[idx].down_time = 0;
-            debounce[idx].inverted = true;
+            debounce[idx].inverted = false;
             if (debounce[idx].inverted) debounce[idx].history = 0xffff;
             idx++;
         }

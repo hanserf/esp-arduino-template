@@ -5,13 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/main/**",
                 "${workspaceFolder}/build/**",
-                "${workspaceFolder}/components/esp32-camera/**",
-                "${workspaceFolder}/components/console/**",
-                "${workspaceFolder}/components/cmd_nvs/**",
-                "${workspaceFolder}/components/cmd_system/**",
+                "${workspaceFolder}/components/arduino/**",
                 "${workspaceFolder}/components/nvs_flash/include/**",
-                "${workspaceFolder}/components/spi_flash/include/**",
-                "${workspaceFolder}/components/esp32-button/**",               
                 "${MY_IDF_PATH}/components/**",
                 "${MY_IDF_PATH}/examples/common_components/protocol_examples_common/**"
             ],

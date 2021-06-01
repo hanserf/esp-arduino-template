@@ -7,7 +7,6 @@
 
 #include <stdio.h>
 #include <string.h>
-
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/event_groups.h>
@@ -16,8 +15,11 @@
 #include <esp_system.h>
 #include <esp_log.h>
 #include <esp_wifi.h>
+#include <esp_flash.h>
+#include <esp_err.h>
 #include <esp_event.h>
-#include <esp_event_loop.h>
+#include <nvs_flash.h>
+//#include <esp_event_loop.h>
 #include "esp_sleep.h"
 #include "driver/rtc_io.h"
 
@@ -25,6 +27,11 @@
 #include "button.h"
 #include "softap_otaserver.h"
 
+#define EXAMPLE_ESP_WIFI_SSID      "Aeolus_"
+#define EXAMPLE_ESP_WIFI_PASS      "FyrogFlamme"
+#define EXAMPLE_ESP_WIFI_CHANNEL   1
+#define EXAMPLE_MAX_STA_CONN 2
+#define GPIO_BTN 13
 
 static const char *TAG = "app";
 
@@ -54,6 +61,7 @@ static void wifi_init_softap()
 {
 
     char ssid_buf[32];
+    /* Replaced by esp_netif_init */
     tcpip_adapter_init();
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
@@ -85,10 +93,12 @@ static void wifi_init_softap()
 }
 
 
-void app_main()
+
+void start_idf_main(void * PVargs)
 {
+    UNUSED(PVargs);
     esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+    if (ret == ESP_ERR_NO_MEM || ret == ESP_ERR_INVALID_VERSION) {
         /* NVS partition was truncated
          * and needs to be erased */
         ESP_ERROR_CHECK(nvs_flash_erase());
@@ -101,8 +111,10 @@ void app_main()
     /* Initialize Wi-Fi */
     wifi_init_softap();
     ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_NONE));
-    start_ota_http();
-    xTaskCreate(&check_button,"BTN_TASK",configMINIMAL_STACK_SIZE*3,NULL,9,NULL);
+    xTaskCreate(&start_ota_http,"OTA_TASK",configMINIMAL_STACK_SIZE*3,NULL,2,NULL);
+    xTaskCreate(&check_button,"BTN_TASK",configMINIMAL_STACK_SIZE*3,NULL,7,NULL);
+    ESP_LOGI(TAG,"IDF OTA up and running");
+
 }
 
 
@@ -119,19 +131,20 @@ static void check_button(void * pvArgs){
             if (ev.pin == GPIO_BTN){
                 switch (ev.event)
                 {
-                case BUTTON_DOWN:                    
-		break;
+                case BUTTON_DOWN:    
+                    ESP_LOGI(TAG,"Button Pressed");                
+		            break;
                 case BUTTON_HELD:
                     held = true;
+                    ESP_LOGI(TAG,"Button Held Down");                
                     break;
                 case BUTTON_UP:
                     if(held){
                         held = false;
-                        /* Deinitialize everything and put to sleep */
-                        init_deepsleep();
+                        ESP_LOGI(TAG,"Held Button Released");                
                     }
                     else{
-                       start_ota_http();
+                        ESP_LOGI(TAG,"Button Released");
                     }
                     break;
                 default:

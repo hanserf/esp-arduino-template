@@ -117,6 +117,11 @@
         "favicons.h": "c",
         "esp_http_server.h": "c",
         "task.h": "c",
-        "esp_ota_ops.h": "c"
+        "esp_ota_ops.h": "c",
+        "esp_event_loop.h": "c",
+        "esp_log.h": "c",
+        "esp_flash.h": "c",
+        "nvs_flash.h": "c",
+        "idf_main.h": "c"
     }
 }
