@@ -8,7 +8,6 @@ build-fw:
   variables:
     SAMPLE_PATH: ${CI_PROJECT_DIR}/idf-project	  
   script:
-    -
     - source /opt/esp32/export.sh
     - cd $SAMPLE_PATH
     - git submodule update --init --recursive --progress
