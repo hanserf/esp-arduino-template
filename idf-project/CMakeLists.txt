@@ -5,8 +5,7 @@ cmake_minimum_required(VERSION 3.5)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(aeolusFW)
 
-set(EXTRA_COMPONENT_DIRS $ENV{IDF_PATH}/examples/common_components/protocol_examples_common/
-                         components/nvs_flash                         
+set(EXTRA_COMPONENT_DIRS components/nvs_flash                         
                          components/arduino
                          components/esp_littlefs)       
                          
