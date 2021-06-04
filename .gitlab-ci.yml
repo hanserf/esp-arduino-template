@@ -1,0 +1,24 @@
+stages:
+  - build
+
+build-fw:
+  stage: build
+  tags:
+  - aeolus_esp32
+  variables:
+    SAMPLE_PATH: ${CI_PROJECT_DIR}/idf-project	  
+  script:
+    -
+    - source /opt/esp32/export.sh
+    - cd $SAMPLE_PATH
+    - git submodule update --init --recursive --progress
+    - bash patches.sh
+    - idf.py build
+    - mkdir binaries
+    - mv build/bootloader/bootloader.bin binaries
+    - mv build/partition_table/partition-table.bin binaries
+    - mv build/aeolusFW.bin binaries
+  artifacts:
+    name: "${CI_PROJECT_NAME}-${CI_JOB_NAME}-$CI_COMMIT_REF_SLUG-$CI_PIPELINE_IID"
+    paths:
+      - ${SAMPLE_PATH}/binaries

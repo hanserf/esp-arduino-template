@@ -1,11 +1,12 @@
 # Aeolus Firmware Development
 
 ### Short info
-Embedded development on ESP32 MCU can be done in C or Arduino.
-https://github.com/espressif/arduino-esp32/blob/master/docs/esp-idf_component.md
-Outlines a way to write arduino/C++ code and compile it using the official ESP-IDF tools.
-Using Menuconfig. the MCU has been configured to run Arduino on processor core 1.
-User tasks in C should be set to run on core 0. 
+
+Embedded development on ESP32 MCU can be done in C or Arduino.  
+https://github.com/espressif/arduino-esp32/blob/master/docs/esp-idf_component.md   
+Outlines a way to write arduino/C++ code and compile it using the official ESP-IDF tools.   
+Using Menuconfig. the MCU has been configured to run Arduino on processor core 1.   
+User tasks in C should be set to run on core 0.   
 
 ### Clone all submodules 
 
@@ -16,23 +17,27 @@ git submodule update --init --recursive --progress
 
 
 ### Install ESP-IDF Toolchain from espressif
-https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/
-Windows users can get everything needed here:
+
+https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/  
+
+Windows users can get everything needed here:  
+
 https://docs.espressif.com/projects/esp-idf/en/latest/esp32/get-started/windows-setup.html
-The main source of the development tools is found here:
+
+The main source of the development tools is found here:  
 https://github.com/espressif/esp-idf
 
 
 
 ### Update ESP toolchain to MASTER
-When first installing ESP-IDF you were prompted for two install paths.
-One path was esp-idf repository location, second was location for binary executables, python environment and tools.
-locate this folder named .espressif, it default to  "C:\Users\youruser\" 
-find uninstaller and uninstall esp-idf tools.
+When first installing ESP-IDF you were prompted for two install paths.  
+One path was esp-idf repository location, second was location for binary executables, python environment and tools.  
+locate this folder named .espressif, it default to  "C:\Users\youruser\"   
+find uninstaller and uninstall esp-idf tools.  
 
-Go to Esp-idf install catalog
+Go to Esp-idf install catalog  
 
-In git bash, cmd or powershell:
+In git bash, cmd or powershell:  
 
 ``` 
 git checkout master
@@ -47,37 +52,39 @@ install.ps in powershell
 
 ### Patch Necessery known bugs
 
-For UNIX:
+For UNIX:  
 ```
 bash patches.sh
 ```
-Windows:
-Open pathces.sh in notepad.
-sed is a non interactive text editor replacing a match regexp i a file using pattern :FIND:REPLACE:g
-Do text replacement in files listed in patches.sh
+Windows:  
+Open pathces.sh in notepad.  
+sed is a non interactive text editor replacing a match regexp i a file using pattern :FIND:REPLACE:g  
+Do text replacement in files listed in patches.sh  
 
 
 ## Compile Flash and Monitor:
 
-Windows:
-Go to root folder of ESP-IDF
-open cmd.exe 
+Windows:  
+Go to root folder of ESP-IDF  
+open cmd.exe    
 ```
 export.bat
 ```
 
-OR
+OR  
 
-open powershell 
+open powershell   
 ```
 export.ps1
 ```
-Linux:
+
+Linux:  
 ```
 source export.sh
 ```
 
 If you see a response like this, all is good:
+
 ```
 Setting IDF_PATH: C:\esp32
 
