@@ -5,6 +5,7 @@
 #include <encoder.h>
 #include <esp_idf_lib_helpers.h>
 #include <esp_log.h>
+#include <my_encoder.h>
 
 // Connect common encoder pin to ground
 #if HELPER_TARGET_IS_ESP8266
@@ -25,10 +26,15 @@
 
 static const char *TAG = "encoder_example";
 
-static QueueHandle_t event_queue;
-static rotary_encoder_t re;
+static struct {
+    my_encoder_callback_t event_callback;
+    QueueHandle_t event_queue;
+    rotary_encoder_t re;
 
-void test(void *arg)
+}MY_ENC;
+
+/*This task only runs in response to an encoder interrupt*/
+void encoder_task(void *arg)
 {
     // Create event queue for rotary encoders
     event_queue = xQueueCreate(EV_QUEUE_LEN, sizeof(rotary_encoder_event_t));
@@ -75,7 +81,7 @@ void test(void *arg)
     }
 }
 
-void app_main()
+void init_encoder(int pina,int pinb, int pin_btn,my_encoder_callback_t encoder_event_callback)
 {
     xTaskCreate(test, TAG, configMINIMAL_STACK_SIZE * 8, NULL, 5, NULL);
 }

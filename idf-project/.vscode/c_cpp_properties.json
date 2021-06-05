@@ -7,6 +7,7 @@
                 "${workspaceFolder}/build/**",
                 "${workspaceFolder}/components/arduino/**",
                 "${workspaceFolder}/components/nvs_flash/include/**",
+                "${workspaceFolder}/components/extra_components/**",
                 "${MY_IDF_PATH}/components/**",
                 "${MY_IDF_PATH}/examples/common_components/protocol_examples_common/**"
             ],
