@@ -1,5 +1,6 @@
 set(COMPONENT_SRCS "system/idf_main.c"
-                   "system/tcp_console.c"
+                   "system/tcp_console_driver.c"
+                   "system/my_encoder.c"
                    "ota/softap_otaserver.c"
                    "system/button.c" 
                    "app_console.cpp"

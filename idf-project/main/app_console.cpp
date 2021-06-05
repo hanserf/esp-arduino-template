@@ -2,7 +2,6 @@
 #include "esp_console.h"
 #include "argtable3/argtable3.h"
 
-#include "esp_camera.h"
 #include "tcp_console_driver.h"
 
 
