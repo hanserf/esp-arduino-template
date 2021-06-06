@@ -15,7 +15,7 @@
 #include <sys/select.h>
 #include <string.h>
 #include "esp_system.h"
-#include "protocol_examples_common.h"
+//#include "protocol_examples_common.h"
 #include "esp_log.h"
 #include "esp_console.h"
 #include "linenoise/linenoise.h"

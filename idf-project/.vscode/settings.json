@@ -122,6 +122,7 @@
         "esp_log.h": "c",
         "esp_flash.h": "c",
         "nvs_flash.h": "c",
-        "idf_main.h": "c"
+        "idf_main.h": "c",
+        "my_encoder.h": "c"
     }
 }

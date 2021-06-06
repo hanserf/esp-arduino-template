@@ -112,7 +112,7 @@ void start_idf_main(void * PVargs)
     wifi_init_softap();
     ESP_ERROR_CHECK(esp_wifi_set_ps(WIFI_PS_NONE));
     xTaskCreate(&start_ota_http,"OTA_TASK",configMINIMAL_STACK_SIZE*3,NULL,2,NULL);
-    xTaskCreate(&check_button,"BTN_TASK",configMINIMAL_STACK_SIZE*3,NULL,7,NULL);
+    //xTaskCreate(&check_button,"BTN_TASK",configMINIMAL_STACK_SIZE*3,NULL,7,NULL);
     ESP_LOGI(TAG,"IDF OTA up and running");
 
 }

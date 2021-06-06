@@ -1,8 +1,51 @@
 /*Console dependencies*/
+extern "C"{
 #include "esp_console.h"
 #include "argtable3/argtable3.h"
-
 #include "tcp_console_driver.h"
+};
+
+typedef enum{
+    AC_SET_CMD,
+    AC_GET_CMD,
+}cmd_type_t;
+
+class ConsoleCmd
+{
+private:
+    cmd_type_t cmd_type;
+    /* data */
+public:
+    ConsoleCmd(cmd_type_t type,char *cmd_argument, char * cmd_help);
+    ~ConsoleCmd();
+    int parse_cmd();
+};
+
+ConsoleCmd::ConsoleCmd(cmd_type_t type,char *cmd_argument, char * cmd_help){
+switch (type)
+    {
+    case AC_SET_CMD:
+        struct arg_int *my_cmd;
+        /* code */
+        break;
+    case AC_GET_CMD:
+        struct arg_lit *my_cmd;
+        /* code */
+        break;
+    default:
+        break;
+    }
+}
+
+ConsoleCmd::~ConsoleCmd()
+{
+}
+
+int ConsoleCmd::parse_cmd(int argc, char** argv){
+    int nerrors = arg_parse(argc, argv, (void**) &cam_set_args);
+
+}
+
 
 
 
@@ -74,35 +117,6 @@ static int colsole_exit_cmd(int argc, char** argv);
 static void register_exit_command();
 
 
-static int cam_cmd_allsettings(int argc, char** argv){
-    sensor_t * s = esp_camera_sensor_get();
-    printf("framesize:%u\n", s->status.framesize);
-    printf("quality:%u\n", s->status.quality);
-    printf("brightness:%d\n", s->status.brightness);
-    printf("contrast:%d\n", s->status.contrast);
-    printf("saturation:%d\n", s->status.saturation);
-    printf("sharpness:%d\n", s->status.sharpness);
-    printf("special_effect:%u\n", s->status.special_effect);
-    printf("wb_mode:%u\n", s->status.wb_mode);
-    printf("awb:%u\n", s->status.awb);
-    printf("awb_gain:%u\n", s->status.awb_gain);
-    printf("aec:%u\n", s->status.aec);
-    printf("aec2:%u\n", s->status.aec2);
-    printf("ae_level:%d\n", s->status.ae_level);
-    printf("aec_value:%u\n", s->status.aec_value);
-    printf("agc:%u\n", s->status.agc);
-    printf("agc_gain:%u\n", s->status.agc_gain);
-    printf("gainceiling:%u\n", s->status.gainceiling);
-    printf("bpc:%u\n", s->status.bpc);
-    printf("wpc:%u\n", s->status.wpc);
-    printf("raw_gma:%u\n", s->status.raw_gma);
-    printf("lenc:%u\n", s->status.lenc);
-    printf("vflip:%u\n", s->status.vflip);
-    printf("hmirror:%u\n", s->status.hmirror);
-    printf("dcw:%u\n", s->status.dcw);
-    printf("colorbar:%u\n", s->status.colorbar);
-    return 0;    
-}
 
 static void register_get_all_settings()
 {

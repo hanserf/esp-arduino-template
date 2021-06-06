@@ -11,7 +11,7 @@
 
 #define EV_QUEUE_LEN 5
 
-static const char *TAG = "encoder_example";
+static const char *TAG = "my_encoder";
 
 static struct {
     my_encoder_callback_t event_callback;
@@ -21,11 +21,11 @@ static struct {
 
 }MY_ENC;
 
-static inline void __set_bit(long *x, int bitNum) {
+static inline void __set_bit(int32_t *x, int bitNum) {
     *x |= (1L << bitNum);
 }
-static inline void __clear_bit(long *x, int bitNum) {
-    *x &= ~(1 << (bitNum)))
+static inline void __clear_bit(int32_t *x, int bitNum) {
+    *x &= ~(1 << (bitNum));
 }
 
 
@@ -37,53 +37,44 @@ void encoder_task(void *arg)
     int32_t val = 0;
     int32_t ctl = 0;
     
-
+    bool valid; 
     ESP_LOGI(TAG, "Initial value: %d", val);
     while (1)
     {
         ESP_ERROR_CHECK((xQueueReceive(MY_ENC.event_queue, &e, portMAX_DELAY) == pdPASS)?ESP_OK:ESP_FAIL);
-
+        valid = true;
         switch (e.type)
         {
             case RE_ET_BTN_PRESSED:
                 __set_bit(&val,ROTINC_MSB);
                 ESP_LOGI(TAG, "Button pressed");
-                if(MY_ENC.event_callback != NULL){
-                    MY_ENC.event_callback(MYENC_BTN_PUSHED,val);
-                }
                 break;
             case RE_ET_BTN_RELEASED:
                 __clear_bit(&val,ROTINC_LONG);
                 __clear_bit(&val,ROTINC_MSB);
                 ESP_LOGI(TAG, "Button released");
-                if(MY_ENC.event_callback != NULL){
-                    MY_ENC.event_callback(MYENC_BTN_RELEASED,val);
-                }
                 break;
             case RE_ET_BTN_CLICKED:
                 __set_bit(&val,ROTINC_MSB);
                 ESP_LOGI(TAG, "Button clicked");
-                if(MY_ENC.event_callback != NULL){
-                    MY_ENC.event_callback(MYENC_BTN_CLICKED);
-                }
                 break;
             case RE_ET_BTN_LONG_PRESSED:
                 __set_bit(&val,ROTINC_LONG);
                 ESP_LOGI(TAG, "Looooong pressed button");
-                if(MY_ENC.event_callback != NULL){
-                    MY_ENC.event_callback(MYENC_BTN_LONG);
-                }
                 break;
             case RE_ET_CHANGED:
                 ctl += e.diff;
                 val |= ctl;
                 ESP_LOGI(TAG, "Value = %d", val);
-                if(MY_ENC.event_callback != NULL){
-                    MY_ENC.event_callback(MYENC_BTN_RELEASED,val);
-                }
                 break;
             default:
+                valid = false;
                 break;
+        }
+        if(valid){
+            if(MY_ENC.event_callback != NULL){
+                MY_ENC.event_callback(e.type,val);
+            }
         }
     }
 }
@@ -111,7 +102,6 @@ void init_encoder(int pina,int pinb, int pin_btn,my_encoder_callback_t encoder_e
 }
 
 void destroy_encoder(){
-    ESP_ERROR_CHECK((vTaskDelete(MY_ENC.task) == pdPASS)?ESP_OK:ESP_FAIL);
+    vTaskDelete(MY_ENC.task);
     ESP_ERROR_CHECK(rotary_encoder_remove(&MY_ENC.re));
-
 }
