@@ -7,7 +7,6 @@ extern "C"{
 
 /* Local function prototypes */
 static void my_encoder_callback(my_encoder_event_t event, int32_t current);
-ardu_encoder my_enc(5,14,13,my_encoder_callback);
 
 void setup(){
   Serial.println("Starting Arduino Serial");
@@ -19,6 +18,7 @@ void setup(){
 
 void loop(){
   int cntr = 0;
+  ardu_encoder my_enc(5,14,13,my_encoder_callback);
   Serial.println("In Loop, starting External Code");
   Serial.println("Doing Arduino stuff");
   while(true){

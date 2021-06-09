@@ -28,7 +28,7 @@
 #include "softap_otaserver.h"
 
 #define EXAMPLE_ESP_WIFI_SSID      "Aeolus_"
-#define EXAMPLE_ESP_WIFI_PASS      "FyrogFlamme"
+#define EXAMPLE_ESP_WIFI_PASS      "Fyr&Flamme"
 #define EXAMPLE_ESP_WIFI_CHANNEL   1
 #define EXAMPLE_MAX_STA_CONN 2
 #define GPIO_BTN 13
