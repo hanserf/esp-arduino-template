@@ -1,4 +1,4 @@
-# Aeolus Firmware Development
+# Arduino as idf component
 
 ### Short info
 
